@@ -28,7 +28,7 @@ def dump():
         datas.append(data.data)
     return '\n'.join(datas)
 
-@app.route("/OmgFinnbarIsSoAwesome"):
+@app.route("/OmgFinnbarIsSoAwesome")
 def loseyourmind():
     for data in Storage.select():
         data.delete_instance()
