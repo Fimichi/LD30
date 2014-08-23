@@ -217,4 +217,4 @@ function checkBounds(x,y)
 	end
 end
 
-return menu
+return Menu
