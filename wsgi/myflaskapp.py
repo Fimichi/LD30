@@ -28,10 +28,7 @@ def dump():
         datas.append(data.data)
     return '\n'.join(datas)
 
-with open(os.path.join(os.environ['OPENSHIFT_DATA_DIR'],'safeword')) as file:
-    safeword = file.read()
-
-@app.route("/%s" % safeword):
+@app.route("/OmgFinnbarIsSoAwesome"):
 def loseyourmind():
     for data in Storage.select():
         data.delete_instance()
