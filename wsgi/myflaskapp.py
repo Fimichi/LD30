@@ -12,7 +12,6 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 db = Database(app)
 
-
 class Storage(db.Model):
     data = TextField()
 
@@ -28,6 +27,14 @@ def dump():
     for data in Storage.select():
         datas.append(data.data)
     return '\n'.join(datas)
+
+with open(os.path.join(os.environ['OPENSHIFT_DATA_DIR'],'safeword')) as file:
+    safeword = file.read()
+
+@app.route("/%s" % safeword):
+def loseyourmind():
+    for data in Storage.select():
+        data.delete_instance()
 
 if __name__ == "__main__":
     app.run()
