@@ -1,3 +1,5 @@
+-- LIBRARIES
+
 --anim8 = require "lib.kikito.anim8"
 --_ = require "lib.kikito.beholder"
 --bump = require "lib.kikito.bump"
@@ -18,3 +20,12 @@ Stateful = require "lib.kikito.stateful"
 --require "lib.slam"
 
 --navi = require "lib.navi"
+
+-- IMAGES
+blob = {} --blobs are animated, so there
+for i=1,5 do
+	table.insert(blob, love.graphics.newImage("assets/jimpBlob/bigBlob_"..i..".png"))
+	blob[i]:setFilter("nearest","nearest")
+	blob[i]:refresh()
+end
+tree = love.graphics.newImage("assets/tree.png")

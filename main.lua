@@ -6,6 +6,8 @@ function love.load()
 	gamestate:gotoState("Menu")
 	maxframe = 0.1
 	width, height = love.graphics.getWidth(), love.graphics.getHeight()
+	love.window.setTitle("LD30")--temp
+	love.math.setRandomSeed(os.time())
 end
 
 function love.update(dt)
