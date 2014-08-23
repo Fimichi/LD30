@@ -28,11 +28,17 @@ def dump():
         datas.append(data.data)
     return '\n'.join(datas)
 
-@app.route("/OmgFinnbarIsSoAwesome")
-def loseyourmind():
-    for data in Storage.select():
-        data.delete_instance()
+@app.route("/Omg/<safeword>")
+def loseyourmind(safeword):
+    with open(os.path.join(os.environ['OPENSHIFT_DATA_DIR'],'safeword')) as file:
+        safeword_cmp = file.read().strip()
+    if safeword == safeword_cmp:
+        for data in Storage.select():
+            data.delete_instance()
+        return "yay", 418
+    else:
+        return "nope", 403
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
 
