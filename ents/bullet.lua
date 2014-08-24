@@ -3,8 +3,8 @@ local Bullet = class("Bullet", Sprite)
 
 function Bullet:initialize(x, y, mx, my)
 	Sprite.initialize(self, x, y, 2, 2)
-	local ox = mx - self.cx
-	local oy = my - self.cy
+	local ox = mx - self.x
+	local oy = my - self.y
 	local totalDist = math.sqrt(ox^2 + oy^2)
 	self.xDir = ox/totalDist
 	self.yDir = oy/totalDist
@@ -12,13 +12,10 @@ function Bullet:initialize(x, y, mx, my)
 end
 
 function Bullet:update(dt)
-	self.alive = 1 * dt
+	self.alive = self.alive + 1 * dt
 	local speed = 800 * dt
 	self.x = self.x + speed * self.xDir
 	self.y = self.y + speed * self.yDir
-	if self.alive > 3 then
-		self = nil
-	end
 end
 
 function Bullet:draw()

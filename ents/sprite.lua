@@ -1,15 +1,18 @@
 local Sprite = class("Sprite")
 
 function Sprite:initialize(x, y, w, h)
-	self.x = x
-	self.y = y
 	self.w = w
 	self.h = h
-	self.cx = x + w/2
-	self.cy = y + h/2
+	self.x = x
+	self.y = y
 	self.vx = 0
 	self.vy = 0
 	--bump:add(self, self.x, self.y, self.w, self.h)
+end
+
+function Sprite:update(dt)
+	self.l = self.x - self.w/2
+	self.t = self.y - self.h/2
 end
 
 function Sprite:move()

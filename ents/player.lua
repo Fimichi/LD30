@@ -3,19 +3,18 @@ local Player = class("Player", Sprite)
 local Bullet = require "ents.bullet"
 
 local clockmax = 0.2
+local damp = 0.6
 
 function Player:initialize(x, y, difficult)
 	Sprite.initialize(self, x, y, 40, 40)
 	self.bclock = clockmax
 	self.bullets = {}
+	self.diff = difficult
 	
-	self.body = love.physics.newBody(world, self.cx, self.cy, "dynamic")
+	self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
 	self.shape = love.physics.newRectangleShape(self.w, self.h)
 	self.fixture = love.physics.newFixture(self.body, self.shape)
 	self.body:setFixedRotation(true)
-	if not difficult then
-		self.body:setLinearDamping(0.1)
-	end
 end
 
 function Player:mousepressed()
@@ -23,12 +22,21 @@ function Player:mousepressed()
 end
 
 function Player:update(dt)
-	l.each(self.bullets, "update", dt)
+	for i, bullet in pairs(self.bullets) do
+		bullet:update(dt)
+		if bullet.alive > 3 then
+			table.remove(self.bullets, i)
+			bullet = nil
+		end
+	end
 	
-	self.cx, self.cy = self.body:getPosition()
+	self.x, self.y = self.body:getPosition()
 	
 	if love.mouse.isDown("l") then
 		self.bclock = self.bclock + dt
+		self.body:setLinearDamping(0)
+	elseif not self.diff then
+		self.body:setLinearDamping(damp)
 	end
 	if self.bclock > clockmax then
 		self.bclock = self.bclock - clockmax
@@ -39,18 +47,18 @@ end
 
 function Player:shoot()
 	print("SHOT")
-	local speed = 400
+	local speed = 1200
 	local mx, my = love.mouse.getPosition()
 	mx, my = cam:toWorld(mx, my)
-	local ox = self.cx - mx
-	local oy = self.cy - my
+	local ox = self.x - mx
+	local oy = self.y - my
 	local totalDist = math.sqrt(ox^2 + oy^2)
 	local xDir = ox/totalDist
 	local yDir = oy/totalDist
 	
 	self.body:applyForce(speed*xDir, speed*yDir)
 	
-	table.insert(self.bullets, Bullet:new(self.cx, self.cy, mx, my))
+	table.insert(self.bullets, Bullet:new(self.x, self.y, mx, my))
 end
 
 function Player:draw()
