@@ -12,7 +12,7 @@ Stateful = require "lib.kikito.stateful"
 
 --gui = require "lib.gui"
 
---l = require "lib.lume"
+l = require "lib.lume"
 --lurker = require "lib.lurker"
 
 --require "lib.slam"
