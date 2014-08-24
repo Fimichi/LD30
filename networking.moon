@@ -1,4 +1,5 @@
 export convertToSendable = (a) ->
+	planets = {}
 	str = "Planet({['name']='#{a.name}',['size']=#{a.size},['colour']={#{a.colour[1]},#{a.colour[2]},#{a.colour[3]}}},{" --the first section
 	--entities
 	for i=1,#(a.entities)
@@ -19,5 +20,5 @@ export convertToSendable = (a) ->
 	splitData = lume.split(data,"\n")
 	for i=1,#splitData
 		table.insert(planets,loadstring("return #{splitData[i]}")())
-		table.insert(locs,{love.math.random(100,700),love.math.random(100,500)}) --temporary
-	currentPlanet = #planets
+	export currentPlanet = #planets
+	return planets

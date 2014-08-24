@@ -1,4 +1,5 @@
 convertToSendable = function(a)
+  local planets = { }
   local str = "Planet({['name']='" .. tostring(a.name) .. "',['size']=" .. tostring(a.size) .. ",['colour']={" .. tostring(a.colour[1]) .. "," .. tostring(a.colour[2]) .. "," .. tostring(a.colour[3]) .. "}},{"
   for i = 1, #(a.entities) do
     local adv = string.sub(tostring(a.entities[i].drawableOptions), 0, -3) .. "}"
@@ -19,10 +20,7 @@ convertToSendable = function(a)
   local splitData = lume.split(data, "\n")
   for i = 1, #splitData do
     table.insert(planets, loadstring("return " .. tostring(splitData[i]))())
-    table.insert(locs, {
-      love.math.random(100, 700),
-      love.math.random(100, 500)
-    })
   end
-  local currentPlanet = #planets
+  currentPlanet = #planets
+  return planets
 end

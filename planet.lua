@@ -117,7 +117,7 @@ do
   local _base_0 = {
     controls = function(self, planet)
       local dt = love.timer.getDelta()
-      local l, r = love.keyboard.isDown("left"), love.keyboard.isDown("right")
+      local l, r = love.keyboard.isDown("left") or love.keyboard.isDown("a"), love.keyboard.isDown("right") or love.keyboard.isDown("d")
       if l then
         planet:tilt(dt * 2)
         self.rad = self.rad - (dt * 2)

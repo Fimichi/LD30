@@ -75,7 +75,7 @@ export class Entity
 export class Player
 	controls: (planet) =>
 		dt = love.timer.getDelta!
-		l,r = love.keyboard.isDown("left"),love.keyboard.isDown("right")
+		l,r = love.keyboard.isDown("left") or love.keyboard.isDown("a"),love.keyboard.isDown("right") or love.keyboard.isDown("d")
 		if l
 			planet\tilt(dt*2)
 			@rad -= (dt*2)

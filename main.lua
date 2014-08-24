@@ -1,15 +1,13 @@
 require "req"
 require "states"
 
---[[ States so far:
-     > Menu, or the planet creation screen (barely started)
-     > Game, or exploring a planet (not started)
-     > Travel, or spaceship things (not started)
-]]
+prompt = ""
+firstPlanet = true
+planets = {}
 
 function love.load()
 	gamestate = States:new()
-	gamestate:gotoState("Menu")
+	gamestate:gotoState("Explore")
 	maxframe = 0.1
 	width, height = love.graphics.getWidth(), love.graphics.getHeight()
 	love.window.setTitle("LD30")--temp

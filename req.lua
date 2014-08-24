@@ -67,8 +67,10 @@ tree2 = love.graphics.newImage("assets/tree2.png")
 tree3 = love.graphics.newImage("assets/tree3.png")
 tree4 = love.graphics.newImage("assets/tree4.png")
 tree5 = love.graphics.newImage("assets/tree5.png")
+ship = love.graphics.newImage("assets/ship.png")
 
 --now for the easy entities
+--these are here purely for copying
 
 enemies = {}
 vegetation = {}
@@ -87,3 +89,4 @@ table.insert(vegetation,Entity("veg","tree4",2,0,0.1,{height=-25}))
 table.insert(vegetation,Entity("veg","tree5",4.8,0,0.1,{height=-20}))
 
 bigFont = love.graphics.newFont(30)
+smallFont = love.graphics.newFont(15)
