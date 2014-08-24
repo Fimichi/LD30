@@ -1,6 +1,12 @@
 require "req"
 require "states"
 
+--[[ States so far:
+     > Menu, or the planet creation screen (barely started)
+     > Game, or exploring a planet (not started)
+     > Travel, or spaceship things (not started)
+]]
+
 function love.load()
 	gamestate = States:new()
 	gamestate:gotoState("Menu")
@@ -63,4 +69,8 @@ function love.focus(f)
   else
     gamestate:popState("Pause")
   end
+end
+
+function love.textinput(t)
+	if gamestate.textinput then gamestate:textinput(t) end
 end
