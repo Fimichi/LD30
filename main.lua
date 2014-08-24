@@ -1,9 +1,11 @@
 require "req"
 require "states"
 
+local gamestate
+
 function love.load()
 	gamestate = States:new()
-	gamestate:gotoState("Menu")
+	gamestate:gotoState("Game")
 	maxframe = 0.1
 	width, height = love.graphics.getWidth(), love.graphics.getHeight()
 end
