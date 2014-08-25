@@ -5,6 +5,8 @@ local Player = require "ents.player"
 local Elevator = require "ents.elevator"
 local gamera = require "lib.kikito.gamera"
 
+local imgStars = love.graphics.newImage("assets/stars.png")
+
 function Game:enteredState()
 	bump = bumplib.newWorld(64)
 	self.diff = false
@@ -14,8 +16,8 @@ function Game:enteredState()
 	player = Player:new(100,100,self.diff)
 	elev = Elevator:new(400,600)
 	
-	cam = gamera.new(-800,-600,2400,1800)
-	cam:setScale(.001) --max zoom-out
+	cam = gamera.new(-1600,-math.huge,4200,math.huge)
+	cam:setScale(0.75) --max zoom-out
 	cam:setPosition(400, 300)
 end
 
@@ -23,10 +25,7 @@ function Game:update(dt)
 	world:update(dt)
 	player:update(dt)
 	elev:update(dt)
-end
-
-local function orthoCam(x)
-	
+	cam:setPosition(player.x, player.y)
 end
 
 function Game:mousepressed(x, y, b)
@@ -39,9 +38,9 @@ end
 
 function Game:draw()
 	cam:draw(function(l,t,w,h)
+		love.graphics.draw(imgStars, 0, 0)
 		player:draw()
 		elev:draw()
-		love.graphics.rectangle("line", 0, 0, 800, 600)
 	end)
 end
 
