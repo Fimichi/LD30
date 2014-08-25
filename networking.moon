@@ -4,14 +4,14 @@ export convertToSendable = (a) ->
 	--entities
 	for i=1,#(a.entities)
 		adv = string.sub(tostring(a.entities[i].drawableOptions),0,-3).."}"
-		str ..= "Entity('#{a.entities[i].object}','#{a.entities[i].imageName}',#{a.entities[i].rad},#{a.entities[i].speed},#{a.entities[i].anim},#{adv})"
+		str ..= "Entity('#{a.entities[i].object}','#{a.entities[i].imageName}',#{a.entities[i].rad},#{a.entities[i].speed},#{a.entities[i].anim},'#{a.entities[i].sound}',#{adv})"
 		if i<#(a.entities)
 			str ..= ","
 	str ..= "}"
 	--finally add player
 	if a.player
 		adv = string.sub(tostring(a.player.drawableOptions),0,-3).."}"
-		str ..= "Entity('#{a.player.object}','#{a.player.imageName}',#{a.player.rad},#{a.player.speed},#{a.player.anim},#{adv})"
+		str ..= "Entity('#{a.player.object}','#{a.player.imageName}',#{a.player.rad},#{a.player.speed},#{a.player.anim},'#{a.player.sound}',#{adv})"
 	str ..= ")"
 	--export plan = loadstring("return #{str}")()
 	str = string.gsub(str," ","_")

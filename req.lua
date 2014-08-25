@@ -69,24 +69,26 @@ tree4 = love.graphics.newImage("assets/tree4.png")
 tree5 = love.graphics.newImage("assets/tree5.png")
 ship = love.graphics.newImage("assets/ship.png")
 
---now for the easy entities
---these are here purely for copying
+enemySound = {}
+vegSound = {}
+encounterSound = {}
+bg = {}
 
-enemies = {}
-vegetation = {}
+for i=1,7 do
+	table.insert(enemySound,love.audio.newSource("/audio/enemy"..i..".wav","stream"))
+end
+for i=1,5 do
+	table.insert(vegSound,love.audio.newSource("/audio/tree"..i..".wav","stream"))
+end
+for i=1,7 do
+	table.insert(encounterSound,love.audio.newSource("/audio/encounter"..i..".wav","stream"))
+end
+for i=1,2 do
+	table.insert(bg,love.audio.newSource("/audio/bg"..i..".wav","stream"))
+end
+
+
 player = Player("player","char",4.8,0,0.1,{scale=0.5})
-table.insert(enemies,Entity("enemy","blob",2,1,0.1,{height=-5, rotation=0.15}))
-table.insert(enemies,Entity("enemy","blob2",3,2,0.1,{height=-5, rotation=0.15}))
-table.insert(enemies,Entity("enemy","snail",1,0.5,0.1,{height=-5, rotation=0.15}))
-table.insert(enemies,Entity("enemy","octopus",4,1.5,0.1,{height=-5, rotation=0.15}))
-table.insert(enemies,Entity("enemy","punk",5,1.5,0.1,{rotation=0.15}))
-table.insert(enemies,Entity("enemy","spider",4.5,2,0.1,{height=-5,rotation=0.15}))
-table.insert(enemies,Entity("enemy","doll",1.5,1.5,0.1,{height=-5,rotation=0.15}))
-table.insert(vegetation,Entity("veg","tree2",1,0,0.1,{height=-15}))
-table.insert(vegetation,Entity("veg","tree",6,0,0.1,{height=-15}))
-table.insert(vegetation,Entity("veg","tree3",3.5,0,0.1,{height=-15, rotation=0.3}))
-table.insert(vegetation,Entity("veg","tree4",2,0,0.1,{height=-25}))
-table.insert(vegetation,Entity("veg","tree5",4.8,0,0.1,{height=-20}))
 
 bigFont = love.graphics.newFont(30)
 smallFont = love.graphics.newFont(15)

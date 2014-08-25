@@ -2,13 +2,17 @@
 -- HOPEFULLY THIS WILL BE OKISH PERHAPS
 
 export class Entity
-	new: (objectType,drawable,radi,speed,animationSpeed=0.1,drawableOptions) =>
+	new: (objectType,drawable,radi,speed,animationSpeed=0.1,sound,drawableOptions) =>
 		@a,@image = pcall(loadstring("return #{drawable}"))
 		@imageName = drawable
 		if not @a
 			error("BAD IMAGE")
 		if type(@image) ~= "table"
 			@image = {@image}
+		@soundName = sound
+		@b,@sound = pcall(loadstring("return #{sound}"))
+		if not @b
+			@sound = ""
 		@rad = radi
 		@speed = speed
 		@anim = animationSpeed
@@ -69,6 +73,7 @@ export class Entity
 				else
 					return 0,0,0,0)
 			@image[i]\refresh!
+		return @
 	setPosition: (rad) =>
 		@rad = rad
 		return @
@@ -77,6 +82,7 @@ export class Entity
 			@reactionFlag = false
 			--and react!
 			print @object
+			love.audio.play(@sound) if @sound
 	finishReact: () =>
 		@reactionFlag = true
 

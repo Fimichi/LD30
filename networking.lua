@@ -3,7 +3,7 @@ convertToSendable = function(a)
   local str = "Planet({['name']='" .. tostring(a.name) .. "',['size']=" .. tostring(a.size) .. ",['colour']={" .. tostring(a.colour[1]) .. "," .. tostring(a.colour[2]) .. "," .. tostring(a.colour[3]) .. "}},{"
   for i = 1, #(a.entities) do
     local adv = string.sub(tostring(a.entities[i].drawableOptions), 0, -3) .. "}"
-    str = str .. "Entity('" .. tostring(a.entities[i].object) .. "','" .. tostring(a.entities[i].imageName) .. "'," .. tostring(a.entities[i].rad) .. "," .. tostring(a.entities[i].speed) .. "," .. tostring(a.entities[i].anim) .. "," .. tostring(adv) .. ")"
+    str = str .. "Entity('" .. tostring(a.entities[i].object) .. "','" .. tostring(a.entities[i].imageName) .. "'," .. tostring(a.entities[i].rad) .. "," .. tostring(a.entities[i].speed) .. "," .. tostring(a.entities[i].anim) .. ",'" .. tostring(a.entities[i].sound) .. "'," .. tostring(adv) .. ")"
     if i < #(a.entities) then
       str = str .. ","
     end
@@ -11,7 +11,7 @@ convertToSendable = function(a)
   str = str .. "}"
   if a.player then
     local adv = string.sub(tostring(a.player.drawableOptions), 0, -3) .. "}"
-    str = str .. "Entity('" .. tostring(a.player.object) .. "','" .. tostring(a.player.imageName) .. "'," .. tostring(a.player.rad) .. "," .. tostring(a.player.speed) .. "," .. tostring(a.player.anim) .. "," .. tostring(adv) .. ")"
+    str = str .. "Entity('" .. tostring(a.player.object) .. "','" .. tostring(a.player.imageName) .. "'," .. tostring(a.player.rad) .. "," .. tostring(a.player.speed) .. "," .. tostring(a.player.anim) .. ",'" .. tostring(a.player.sound) .. "'," .. tostring(adv) .. ")"
   end
   str = str .. ")"
   str = string.gsub(str, " ", "_")

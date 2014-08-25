@@ -37,6 +37,7 @@ do
         end)
         self.image[i]:refresh()
       end
+      return self
     end,
     setPosition = function(self, rad)
       self.rad = rad
@@ -45,7 +46,10 @@ do
     react = function(self)
       if self.reactionFlag then
         self.reactionFlag = false
-        return print(self.object)
+        print(self.object)
+        if self.sound then
+          return love.audio.play(self.sound)
+        end
       end
     end,
     finishReact = function(self)
@@ -54,7 +58,7 @@ do
   }
   _base_0.__index = _base_0
   local _class_0 = setmetatable({
-    __init = function(self, objectType, drawable, radi, speed, animationSpeed, drawableOptions)
+    __init = function(self, objectType, drawable, radi, speed, animationSpeed, sound, drawableOptions)
       if animationSpeed == nil then
         animationSpeed = 0.1
       end
@@ -67,6 +71,11 @@ do
         self.image = {
           self.image
         }
+      end
+      self.soundName = sound
+      self.b, self.sound = pcall(loadstring("return " .. tostring(sound)))
+      if not self.b then
+        self.sound = ""
       end
       self.rad = radi
       self.speed = speed

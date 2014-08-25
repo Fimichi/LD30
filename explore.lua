@@ -4,7 +4,7 @@ local stars = {}
 local cursor = "|"
 local clock = 0
 local inventory = {}
-local possibleItems = {{'Entity("enemy","blob",3,2,0.1,{height=-5, rotation=0.15})',"blob"},{'Entity("enemy","blob2",3,2,0.1,{height=-5, rotation=0.15})',"blob2"},{'Entity("enemy","snail",1,0.5,0.1,{height=-5, rotation=0.15})',"snail"},{'Entity("enemy","octopus",4,1.5,0.1,{height=-5, rotation=0.15})',"octopus"},{'Entity("enemy","punk",5,1.5,0.1,{rotation=0.15})',"punk"},{'Entity("enemy","spider",4.5,2,0.1,{height=-5,rotation=0.15})',"spider"},{'Entity("enemy","doll",1.5,1.5,0.1,{height=-5,rotation=0.15})',"doll"},{'Entity("veg","tree2",1,0,0.1,{height=-15})',"tree2"},{'Entity("veg","tree",6,0,0.1,{height=-15})',"tree"},{'Entity("veg","tree3",3.5,0,0.1,{height=-15, rotation=0.3})',"tree3"},{'Entity("veg","tree4",2,0,0.1,{height=-25})',"tree4"},{'Entity("veg","tree5",4.8,0,0.1,{height=-20})',"tree5"}} -- a fluffing weird way of doing this
+local possibleItems = {{'Entity("enemy","blob",3,2,0.1,"enemySound[1]",{height=-5, rotation=0.15})',"blob"},{'Entity("enemy","blob2",3,2,0.1,"enemySound[2]",{height=-5, rotation=0.15})',"blob2"},{'Entity("enemy","snail",1,0.5,0.1,"enemySound[3]",{height=-5, rotation=0.15})',"snail"},{'Entity("enemy","octopus",4,1.5,0.1,"enemySound[4]",{height=-5, rotation=0.15})',"octopus"},{'Entity("enemy","punk",5,1.5,0.1,"enemySound[5]",{rotation=0.15})',"punk"},{'Entity("enemy","spider",4.5,2,0.1,"enemySound[6]",{height=-5,rotation=0.15})',"spider"},{'Entity("enemy","doll",1.5,1.5,0.1,"enemySound[7]",{height=-5,rotation=0.15})',"doll"},{'Entity("veg","tree2",1,0,0.1,"vegSound[1]",{height=-15})',"tree2"},{'Entity("veg","tree",6,0,0.1,"vegSound[2]",{height=-15})',"tree"},{'Entity("veg","tree3",3.5,0,0.1,"vegSound[3]",{height=-15, rotation=0.3})',"tree3"},{'Entity("veg","tree4",2,0,0.1,"vegSound[4]",{height=-25})',"tree4"},{'Entity("veg","tree5",4.8,0,0.1,"vegSound[5]",{height=-20})',"tree5"}} -- a fluffing weird way of doing this
 local leaving = false
 
 function Explore:enteredState()
@@ -20,6 +20,7 @@ function Explore:enteredState()
 		end
 	end
 	leaving = false
+	love.audio.play(bg[love.math.random(1,2)])
 end
 
 function Explore:update(dt)
@@ -35,6 +36,11 @@ function Explore:update(dt)
 			clock = clock - 1.5
 		end
 	end
+	if love.math.random(0,500) > 499 then --not very often
+		if((not bg[1]:isPlaying()) and (not bg[2]:isPlaying())) then
+			love.audio.play(bg[love.math.random(1,2)])
+		end
+	end
 end
 
 function Explore:textinput(text)
@@ -46,7 +52,8 @@ function Explore:keypressed(key)
 		if key=="backspace" then
 			prompt = prompt:sub(0,-2)
 		elseif key=="return" then
-			myPlanet = Planet({name=prompt,size=love.math.random(80,200),colour={love.math.random(0,255),love.math.random(0,255),love.math.random(0,255)}},{Entity("spaceship","ship",0,0,0.1,{height=-15, rotation=0.25})},player)
+			myPlanet = Planet({name=prompt,size=love.math.random(80,200),colour={love.math.random(0,255),love.math.random(0,255),love.math.random(0,255)}},{Entity("spaceship","ship",0,0,0.1,false,{height=-15, rotation=0.25})},player)
+			love.audio.play(encounterSound[love.math.random(1,7)])
 			prompt = false
 		end
 	end
@@ -55,37 +62,37 @@ function Explore:keypressed(key)
 		if key=="1" then
 			if inventory[1]>0 then
 				local ent = loadstring("return "..possibleItems[inventory[1]][1])()
-				myPlanet:addEntity(ent:setPosition(player.rad))
+				myPlanet:addEntity(ent:setPosition(player.rad):setColour(myPlanet.colour))
 				inventory[1] = 0
 			end
 		elseif key=="2" then
 			if inventory[2]>0 then
 				local ent = loadstring("return "..possibleItems[inventory[2]][1])()
-				myPlanet:addEntity(ent:setPosition(player.rad))
+				myPlanet:addEntity(ent:setPosition(player.rad):setColour(myPlanet.colour))
 				inventory[2] = 0
 			end
 		elseif key=="3" then
 			if inventory[3]>0 then
 				local ent = loadstring("return "..possibleItems[inventory[3]][1])()
-				myPlanet:addEntity(ent:setPosition(player.rad))
+				myPlanet:addEntity(ent:setPosition(player.rad):setColour(myPlanet.colour))
 				inventory[3] = 0
 			end
 		elseif key=="4" then
 			if inventory[4]>0 then
 				local ent = loadstring("return "..possibleItems[inventory[4]][1])()
-				myPlanet:addEntity(ent:setPosition(player.rad))
+				myPlanet:addEntity(ent:setPosition(player.rad):setColour(myPlanet.colour))
 				inventory[4] = 0
 			end
 		elseif key=="5" then
 			if inventory[5]>0 then
 				local ent = loadstring("return "..possibleItems[inventory[5]][1])()
-				myPlanet:addEntity(ent:setPosition(player.rad))
+				myPlanet:addEntity(ent:setPosition(player.rad):setColour(myPlanet.colour))
 				inventory[5] = 0
 			end
 		elseif key=="6" then
 			if inventory[6]>0 then
 				local ent = loadstring("return "..possibleItems[inventory[6]][1])()
-				myPlanet:addEntity(ent:setPosition(player.rad))
+				myPlanet:addEntity(ent:setPosition(player.rad):setColour(myPlanet.colour))
 				inventory[6] = 0
 			end
 		end
@@ -114,8 +121,13 @@ function Explore:draw()
 		if not leaving then
 			for i=1,6 do
 				if inventory[i]>0 then
+					local imgtype = 0
+					if inventory[i]>7 then imgtype=1 end
 					local img = loadstring("return "..possibleItems[inventory[i]][2])()
 					if type(img)=="table" then img=img[1] end
+					local dat = img:getData()
+					dat:mapPixel(function(x,y,r,g,b,a) if (a>0) then if imgtype==0 then return myPlanet.colour[1],myPlanet.colour[2],myPlanet.colour[3] else return 0,myPlanet.colour[2],0 end else return 0,0,0,0 end end)
+					img:refresh()
 					love.graphics.draw(img,(i)*100,500)
 					love.graphics.print(i,i*100,530)
 				end
