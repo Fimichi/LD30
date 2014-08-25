@@ -1,9 +1,10 @@
+local moon = require("moon")
 convertToSendable = function(a)
   local planets = { }
   local str = "Planet({['name']='" .. tostring(a.name) .. "',['size']=" .. tostring(a.size) .. ",['colour']={" .. tostring(a.colour[1]) .. "," .. tostring(a.colour[2]) .. "," .. tostring(a.colour[3]) .. "}},{"
   for i = 1, #(a.entities) do
     local adv = string.sub(tostring(a.entities[i].drawableOptions), 0, -3) .. "}"
-    str = str .. "Entity('" .. tostring(a.entities[i].object) .. "','" .. tostring(a.entities[i].imageName) .. "'," .. tostring(a.entities[i].rad) .. "," .. tostring(a.entities[i].speed) .. "," .. tostring(a.entities[i].anim) .. ",'" .. tostring(a.entities[i].sound) .. "'," .. tostring(adv) .. ")"
+    str = str .. "Entity('" .. tostring(a.entities[i].object) .. "','" .. tostring(a.entities[i].imageName) .. "'," .. tostring(a.entities[i].rad) .. "," .. tostring(a.entities[i].speed) .. "," .. tostring(a.entities[i].anim) .. ",'" .. tostring(a.entities[i].soundName) .. "'," .. tostring(adv) .. ")"
     if i < #(a.entities) then
       str = str .. ","
     end

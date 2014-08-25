@@ -4,13 +4,13 @@ require "states"
 prompt = ""
 firstPlanet = true
 planets = {}
+currentPlanet = 0
 
 function love.load()
 	gamestate = States:new()
 	gamestate:gotoState("Explore")
 	maxframe = 0.1
 	width, height = love.graphics.getWidth(), love.graphics.getHeight()
-	love.window.setTitle("LD30")--temp
 	love.math.setRandomSeed(os.time())
 end
 

@@ -1,6 +1,6 @@
 function love.conf(t)
-    t.title = "Untitled"
-    t.author = "Tim Bumpus"
+    t.title = "Systeme"
+    t.author = "Finnbar Keating"
     t.version = "0.9.1"
     t.window.width = 800
     t.window.height = 600

@@ -96,7 +96,7 @@ function Explore:keypressed(key)
 				inventory[6] = 0
 			end
 		end
-		if key=="up" then
+		if key=="up" or key=="w" then
 			if(player.rad>0 and player.rad<1) then
 				leaving = true
 				myPlanet:removePlayer()
@@ -150,7 +150,7 @@ function Explore:draw()
 				if firstPlanet then
 					planets = convertToSendable(myPlanet)
 				end
-				gamestate:gotoState("Game")
+				gamestate:gotoState("Map")
 			end
 		end
 	else

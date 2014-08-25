@@ -2,7 +2,8 @@ States = class("States"):include(Stateful)
 
 require "pause"
 require "explore"
-require "game"
+require "explore2"
+require "map"
 
 function States:initialize()
 end

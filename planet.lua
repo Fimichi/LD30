@@ -45,16 +45,13 @@ do
     end,
     react = function(self)
       if self.reactionFlag then
-        self.reactionFlag = false
-        print(self.object)
+        print(self.sound)
         if self.sound then
           return love.audio.play(self.sound)
         end
       end
     end,
-    finishReact = function(self)
-      self.reactionFlag = true
-    end
+    finishReact = function(self) end
   }
   _base_0.__index = _base_0
   local _class_0 = setmetatable({
@@ -292,13 +289,29 @@ do
       self.player = nil
     end,
     dealWithCollisions = function(self)
-      local pos = self.player.rad * 10
+      local pos = self.player.rad
       for i = 1, #self.entities do
-        if math.floor(self.entities[i].rad * 10) == math.floor(pos) then
+        if math.floor(self.entities[i].rad) == math.floor(pos) then
           self.entities[i]:react()
         else
           self.entities[i]:finishReact()
         end
+      end
+    end,
+    scaleDown = function(self, div)
+      self.size = self.size / div
+      for i = 1, #self.entities do
+        self.entities[i].scaleX = self.entities[i].scaleX / div
+        self.entities[i].scaleY = self.entities[i].scaleY / div
+        self.entities[i].height = self.entities[i].height / div
+      end
+    end,
+    scaleUp = function(self, multi)
+      self.size = self.size * multi
+      for i = 1, #self.entities do
+        self.entities[i].scaleX = self.entities[i].scaleX * multi
+        self.entities[i].scaleY = self.entities[i].scaleY * multi
+        self.entities[i].height = self.entities[i].height * div
       end
     end
   }
