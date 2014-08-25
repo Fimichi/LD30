@@ -1,10 +1,12 @@
+moon = require"moon"
+
 export convertToSendable = (a) ->
 	planets = {}
 	str = "Planet({['name']='#{a.name}',['size']=#{a.size},['colour']={#{a.colour[1]},#{a.colour[2]},#{a.colour[3]}}},{" --the first section
 	--entities
 	for i=1,#(a.entities)
 		adv = string.sub(tostring(a.entities[i].drawableOptions),0,-3).."}"
-		str ..= "Entity('#{a.entities[i].object}','#{a.entities[i].imageName}',#{a.entities[i].rad},#{a.entities[i].speed},#{a.entities[i].anim},'#{a.entities[i].sound}',#{adv})"
+		str ..= "Entity('#{a.entities[i].object}','#{a.entities[i].imageName}',#{a.entities[i].rad},#{a.entities[i].speed},#{a.entities[i].anim},'#{a.entities[i].soundName}',#{adv})"
 		if i<#(a.entities)
 			str ..= ","
 	str ..= "}"

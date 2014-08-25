@@ -79,12 +79,11 @@ export class Entity
 		return @
 	react: () =>
 		if @reactionFlag
-			@reactionFlag = false
+			--@reactionFlag = false
 			--and react!
-			print @object
 			love.audio.play(@sound) if @sound
 	finishReact: () =>
-		@reactionFlag = true
+		--@reactionFlag = true
 
 export class Player
 	controls: (planet) =>
@@ -206,9 +205,21 @@ export class Planet
 	removePlayer: () =>
 		@player = nil
 	dealWithCollisions: () =>
-		pos = @player.rad*10
+		pos = @player.rad
 		for i=1,#@entities
-			if math.floor(@entities[i].rad * 10) == math.floor(pos)
+			if math.floor(@entities[i].rad) == math.floor(pos)
 				@entities[i]\react!
 			else
 				@entities[i]\finishReact!
+	scaleDown: (div) =>
+		@size /= div
+		for i=1,#@entities
+			@entities[i].scaleX /= div
+			@entities[i].scaleY /= div
+			@entities[i].height /= div
+	scaleUp: (multi) =>
+		@size *= multi
+		for i=1,#@entities
+			@entities[i].scaleX *= multi
+			@entities[i].scaleY *= multi
+			@entities[i].height *= div

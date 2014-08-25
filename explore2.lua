@@ -52,6 +52,7 @@ function Explore2:draw()
 	if leaving then
 		myPlanet.entities[1].height = myPlanet.entities[1].height + 200*love.timer.getDelta()
 		if myPlanet.entities[1].height > 200 then
+			myPlanet.entities[1].height = -15
 			gamestate:gotoState("Map")
 		end
 	end

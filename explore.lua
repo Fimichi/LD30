@@ -147,6 +147,7 @@ function Explore:draw()
 				love.graphics.print("CONNECTED worlds... (max points for theme please)",5,130)
 			end
 			if myPlanet.entities[1].height > 200 then
+				myPlanet.entities[1].height = -15
 				if firstPlanet then
 					planets = convertToSendable(myPlanet)
 				end
