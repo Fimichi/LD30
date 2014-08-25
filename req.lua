@@ -75,16 +75,16 @@ encounterSound = {}
 bg = {}
 
 for i=1,7 do
-	table.insert(enemySound,love.audio.newSource("/audio/enemy"..i..".wav","stream"))
+	table.insert(enemySound,love.audio.newSource("/audio/enemy"..i..".ogg","stream"))
 end
 for i=1,5 do
-	table.insert(vegSound,love.audio.newSource("/audio/tree"..i..".wav","stream"))
+	table.insert(vegSound,love.audio.newSource("/audio/tree"..i..".ogg","stream"))
 end
 for i=1,7 do
-	table.insert(encounterSound,love.audio.newSource("/audio/encounter"..i..".wav","stream"))
+	table.insert(encounterSound,love.audio.newSource("/audio/encounter"..i..".ogg","stream"))
 end
 for i=1,2 do
-	table.insert(bg,love.audio.newSource("/audio/bg"..i..".wav","stream"))
+	table.insert(bg,love.audio.newSource("/audio/bg"..i..".ogg","stream"))
 end
 
 

@@ -45,7 +45,6 @@ do
     end,
     react = function(self)
       if self.reactionFlag then
-        print(self.sound)
         if self.sound then
           return love.audio.play(self.sound)
         end

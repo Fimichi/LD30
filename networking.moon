@@ -1,8 +1,7 @@
-moon = require"moon"
-
 export convertToSendable = (a) ->
 	planets = {}
-	str = "Planet({['name']='#{a.name}',['size']=#{a.size},['colour']={#{a.colour[1]},#{a.colour[2]},#{a.colour[3]}}},{" --the first section
+	name = string.gsub(a.name,"'","\\'")
+	str = "Planet({['name']='#{name}',['size']=#{a.size},['colour']={#{a.colour[1]},#{a.colour[2]},#{a.colour[3]}}},{" --the first section
 	--entities
 	for i=1,#(a.entities)
 		adv = string.sub(tostring(a.entities[i].drawableOptions),0,-3).."}"
@@ -24,6 +23,7 @@ export convertToSendable = (a) ->
 	if #splitData>100
 		dataCount = #splitData - 100 --only get the last 100 planets
 	for i=dataCount,#splitData
+		print loadstring("return #{splitData[i]}")
 		table.insert(planets,loadstring("return #{splitData[i]}")())
 	export currentPlanet = #planets
 	return planets
