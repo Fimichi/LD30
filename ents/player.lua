@@ -7,9 +7,14 @@ local damp = 0.6
 
 function Player:initialize(x, y, difficult)
 	Sprite.initialize(self, x, y, 40, 40)
+	self.name = "player"
 	self.bclock = clockmax
 	self.bullets = {}
 	self.diff = difficult
+	
+	self.hands = {}
+	self.hands["x"] = 0
+	self.hands["y"] = 0
 	
 	self.body = love.physics.newBody(world, self.x, self.y, "dynamic")
 	self.shape = love.physics.newRectangleShape(self.w, self.h)
@@ -22,9 +27,11 @@ function Player:mousepressed()
 end
 
 function Player:update(dt)
+	Sprite.update(self, dt)
+	
 	for i, bullet in pairs(self.bullets) do
 		bullet:update(dt)
-		if bullet.alive > 3 then
+		if bullet.alive >= 3 then
 			table.remove(self.bullets, i)
 			bullet = nil
 		end
@@ -42,11 +49,9 @@ function Player:update(dt)
 		self.bclock = self.bclock - clockmax
 		self:shoot()
 	end
-	--Sprite.move(self)
 end
 
 function Player:shoot()
-	print("SHOT")
 	local speed = 1200
 	local mx, my = love.mouse.getPosition()
 	mx, my = cam:toWorld(mx, my)

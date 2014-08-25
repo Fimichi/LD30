@@ -3,6 +3,7 @@ local Elevator = class("Elevator", Sprite)
 
 function Elevator:initialize(x, y)
 	Sprite.initialize(self, x, y, 150, 190)
+	self.name = "elevator"
 	self.body = love.physics.newBody(world, self.x, self.y)
 	self.shape1 = love.physics.newRectangleShape(0, 20, self.w, self.h-40)
 	self.shape2 = love.physics.newRectangleShape(-65, -75, 20, 40)

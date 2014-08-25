@@ -5,14 +5,17 @@ function Sprite:initialize(x, y, w, h)
 	self.h = h
 	self.x = x
 	self.y = y
+	self.l = self.x - self.w/2
+	self.t = self.y - self.h/2
 	self.vx = 0
 	self.vy = 0
-	--bump:add(self, self.x, self.y, self.w, self.h)
+	bump:add(self, self.l, self.t, self.w, self.h)
 end
 
 function Sprite:update(dt)
 	self.l = self.x - self.w/2
 	self.t = self.y - self.h/2
+	bump:move(self, self.l, self.t)
 end
 
 function Sprite:move()
