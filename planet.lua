@@ -41,6 +41,15 @@ do
     setPosition = function(self, rad)
       self.rad = rad
       return self
+    end,
+    react = function(self)
+      if self.reactionFlag then
+        self.reactionFlag = false
+        return print(self.object)
+      end
+    end,
+    finishReact = function(self)
+      self.reactionFlag = true
     end
   }
   _base_0.__index = _base_0
@@ -71,6 +80,7 @@ do
         255
       }
       self.object = objectType
+      self.reactionFlag = true
       if drawableOptions then
         self.drawableOptions = lume.serialize(drawableOptions)
         self.height = drawableOptions["height"] or 0
@@ -224,12 +234,17 @@ do
     draw = function(self, x, y)
       self.x = x
       self.y = y
+      if self.smooth < 15 then
+        self.smooth = self.smooth + (love.timer.getDelta() * 30)
+      else
+        self.smooth = 100
+      end
       love.graphics.translate(x, y)
       love.graphics.rotate(self.rot)
       love.graphics.setColor(self.colour)
-      love.graphics.circle("fill", 0, 0, self.size)
+      love.graphics.circle("fill", 0, 0, self.size, self.smooth)
       love.graphics.setColor(255 - self.colour[1], 255 - self.colour[2], 255 - self.colour[3])
-      love.graphics.circle("line", 0, 0, self.size)
+      love.graphics.circle("line", 0, 0, self.size, self.smooth)
       love.graphics.setColor(self.colour)
       for i = 1, #self.entities do
         self.entities[i]:update(love.timer.getDelta())
@@ -239,6 +254,7 @@ do
         self.player:update(love.timer.getDelta())
         self.player:draw(self.size)
         self.player:controls(self)
+        self:dealWithCollisions()
       end
       love.graphics.setColor(0, 0, 0)
       love.graphics.setFont(bigFont)
@@ -265,6 +281,16 @@ do
     end,
     removePlayer = function(self)
       self.player = nil
+    end,
+    dealWithCollisions = function(self)
+      local pos = self.player.rad * 10
+      for i = 1, #self.entities do
+        if math.floor(self.entities[i].rad * 10) == math.floor(pos) then
+          self.entities[i]:react()
+        else
+          self.entities[i]:finishReact()
+        end
+      end
     end
   }
   _base_0.__index = _base_0
@@ -282,6 +308,7 @@ do
       self.rot = 0
       self.x = 0
       self.y = 0
+      self.smooth = 3
     end,
     __base = _base_0,
     __name = "Planet"

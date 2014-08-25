@@ -18,7 +18,10 @@ export convertToSendable = (a) ->
 	socket.http.request("http://ld30-allhailnoah.rhcloud.com/store/#{str}")
 	data = socket.http.request("http://ld30-allhailnoah.rhcloud.com/dump")
 	splitData = lume.split(data,"\n")
-	for i=1,#splitData
+	dataCount = 1
+	if #splitData>100
+		dataCount = #splitData - 100 --only get the last 100 planets
+	for i=dataCount,#splitData
 		table.insert(planets,loadstring("return #{splitData[i]}")())
 	export currentPlanet = #planets
 	return planets

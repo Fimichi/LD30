@@ -18,7 +18,11 @@ convertToSendable = function(a)
   socket.http.request("http://ld30-allhailnoah.rhcloud.com/store/" .. tostring(str))
   local data = socket.http.request("http://ld30-allhailnoah.rhcloud.com/dump")
   local splitData = lume.split(data, "\n")
-  for i = 1, #splitData do
+  local dataCount = 1
+  if #splitData > 100 then
+    dataCount = #splitData - 100
+  end
+  for i = dataCount, #splitData do
     table.insert(planets, loadstring("return " .. tostring(splitData[i]))())
   end
   currentPlanet = #planets

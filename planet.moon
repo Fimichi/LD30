@@ -17,6 +17,7 @@ export class Entity
 		@currentDT = 0
 		@colour = {255,255,255}
 		@object = objectType
+		@reactionFlag = true
 		if drawableOptions
 			@drawableOptions = lume.serialize(drawableOptions)
 			@height = drawableOptions["height"] or 0
@@ -71,6 +72,13 @@ export class Entity
 	setPosition: (rad) =>
 		@rad = rad
 		return @
+	react: () =>
+		if @reactionFlag
+			@reactionFlag = false
+			--and react!
+			print @object
+	finishReact: () =>
+		@reactionFlag = true
 
 export class Player
 	controls: (planet) =>
@@ -150,15 +158,20 @@ export class Planet
 		@rot = 0
 		@x = 0
 		@y = 0
+		@smooth = 3
 	draw: (x,y) =>
 		@x = x
 		@y = y
+		if @smooth < 15
+			@smooth += love.timer.getDelta!*30
+		else
+			@smooth = 100
 		love.graphics.translate(x,y) --the planet is now the centre
 		love.graphics.rotate(@rot) --if there's any rotation required
 		love.graphics.setColor(@colour)
-		love.graphics.circle("fill",0,0,@size)
+		love.graphics.circle("fill",0,0,@size,@smooth)
 		love.graphics.setColor(255-@colour[1],255-@colour[2],255-@colour[3])
-		love.graphics.circle("line",0,0,@size)
+		love.graphics.circle("line",0,0,@size,@smooth)
 		love.graphics.setColor(@colour)
 		for i=1,#@entities
 			@entities[i]\update(love.timer.getDelta!)
@@ -167,6 +180,7 @@ export class Planet
 			@player\update(love.timer.getDelta!)
 			@player\draw(@size)
 			@player\controls(@)
+			@dealWithCollisions!
 		love.graphics.setColor(0,0,0)
 		love.graphics.setFont(bigFont)
 		love.graphics.print(@name,-10*#@name,-15)
@@ -177,30 +191,6 @@ export class Planet
 			@entities[i]\setColour(rgb)
 	tilt: (right) =>
 		@rot += right
-	--calculatePosition: (mx,my) =>
-		-- --first, let's work out the angle
-		-- xDif = math.abs(mx-@x)
-		-- yDif = math.abs(my-@y) --these are both positive
-		-- ang = math.deg(math.tan(xDif/yDif)^-1) --math.deg can't be converting to negative, can it?
-		-- --now let's see what we have to subtract it from to get the right final angle
-		-- --WAIT!
-		-- --LOVE'S COORDS HAVE Y GOING TOP TO BOTTOM, NOT VICEVERSA!
-		-- print ang
-		-- if mx-@x >= 0
-		-- 	if my-@y <= 0
-		-- 		--print "topright"
-		-- 		return math.rad(ang)
-		-- 	else
-		-- 		--print "bottomright"
-		-- 		return math.rad(180 - ang)
-		-- else
-		-- 	if my-@y <= 0
-		-- 		--print "topleft"
-		-- 		return math.rad(360 - ang)
-		-- 	else
-		-- 		--print "bottomleft"
-		-- 		return math.rad(180 + ang)
-		-- return @rot
 	addEntity: (entity) =>
 		table.insert(@entities,entity)
 	removeEntity: (number) =>
@@ -209,3 +199,10 @@ export class Planet
 		@player = player
 	removePlayer: () =>
 		@player = nil
+	dealWithCollisions: () =>
+		pos = @player.rad*10
+		for i=1,#@entities
+			if math.floor(@entities[i].rad * 10) == math.floor(pos)
+				@entities[i]\react!
+			else
+				@entities[i]\finishReact!

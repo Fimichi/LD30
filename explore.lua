@@ -110,7 +110,7 @@ function Explore:draw()
 		myPlanet:draw(400,300)
 		love.graphics.origin()
 		love.graphics.setColor(255,255,255)
-		love.graphics.print(player.rad,0,0)
+		--love.graphics.print(player.rad,0,0)
 		if not leaving then
 			for i=1,6 do
 				if inventory[i]>0 then
@@ -149,11 +149,6 @@ function Explore:draw()
 	end
 	love.graphics.origin() --for the pause screen
 end
-
--- function Explore:mousepressed(x,y,button)
--- 	local v = vegetation[1]:setPosition(0)
--- 	if not prompt then myPlanet:addEntity(v) end
--- end
 
 function Explore:mousereleased(x,y,button)
 
