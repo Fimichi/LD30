@@ -19,7 +19,10 @@ Storage.create_table(fail_silently=True)
 
 @app.route("/store/<data>")
 def store(data):
-    return "%i" % Storage.create(data=data).id    
+    if data.endswith("})"):
+        return "%i" % Storage.create(data=data).id
+    else:
+        return "nope", 404
 
 @app.route("/dump")
 def dump():
